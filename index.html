@@ -315,11 +315,11 @@
                 tg.openTelegramLink(SHARE_URL);
                 
                 setTimeout(() => {
-                    shares.share1++;
+                    shares.share1 = 3;  // Passer directement à 3
                     processing.btn1 = false;
                     btn.disabled = false;
                     updateProgress();
-                }, 2000);
+                }, 1000);  // 1 seconde de délai
                 
             } else if (buttonNumber === 2) {
                 if (shares.share2 >= 3 || processing.btn2) return;
@@ -332,11 +332,11 @@
                 tg.openTelegramLink(SHARE_URL);
                 
                 setTimeout(() => {
-                    shares.share2++;
+                    shares.share2 = 3;  // Passer directement à 3
                     processing.btn2 = false;
                     btn.disabled = false;
                     updateProgress();
-                }, 2000);
+                }, 1000);  // 1 seconde de délai
             }
         }
 
