@@ -45,33 +45,72 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        .custom-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .custom-icon.loaded {
+            display: block;
         }
 
         .folder-icon {
-            width: 60px;
-            height: 50px;
+            width: 70px;
+            height: 56px;
             position: relative;
         }
 
-        .folder-icon::before {
-            content: '';
+        .folder-back {
             position: absolute;
-            width: 60px;
-            height: 40px;
-            border: 3px solid #fff;
-            border-radius: 4px;
+            width: 70px;
+            height: 45px;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            border-radius: 6px;
             bottom: 0;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
         }
 
-        .folder-icon::after {
-            content: '';
+        .folder-front {
             position: absolute;
-            width: 30px;
-            height: 8px;
-            background: #fff;
-            border-radius: 4px 4px 0 0;
+            width: 65px;
+            height: 40px;
+            background: linear-gradient(135deg, #5ba3f5 0%, #4a90e2 100%);
+            border-radius: 6px;
+            bottom: 5px;
+            left: 5px;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2);
+        }
+
+        .folder-tab {
+            position: absolute;
+            width: 35px;
+            height: 12px;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            border-radius: 6px 6px 0 0;
             top: 0;
-            left: 0;
+            left: 8px;
+        }
+
+        .folder-lock {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #ff4757;
+            border-radius: 50%;
+            bottom: 18px;
+            right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 6px rgba(255, 71, 87, 0.4);
         }
 
         .title {
@@ -185,7 +224,16 @@
     <div class="container">
         <div class="header">
             <div class="icon-container">
-                <div class="folder-icon"></div>
+                <!-- Pour utiliser votre propre image, décommentez la ligne ci-dessous et mettez l'URL de votre image -->
+                <!-- <img src="VOTRE_URL_IMAGE_ICI" alt="Icon" class="custom-icon" id="customIcon"> -->
+                
+                <!-- Icône dossier par défaut (enlever si vous utilisez votre image) -->
+                <div class="folder-icon">
+                    <div class="folder-back"></div>
+                    <div class="folder-tab"></div>
+                    <div class="folder-front"></div>
+                    <div class="folder-lock">🔞</div>
+                </div>
             </div>
             <h1 class="title">DOSSIER INTIME 🔞</h1>
             <p class="description">
@@ -222,6 +270,21 @@
         tg.expand();
 
         const SHARE_URL = "https://t.me/share/url?url=https://t.me/+y5CzFsZ8b_Q1YmI8&text=TOUS%20LES%20LEAKS%20SONT%20DISPONIBLES%0AICI%20%F0%9F%94%9E%F0%9F%92%A6";
+
+        // Gérer l'image personnalisée
+        const customIcon = document.getElementById('customIcon');
+        if (customIcon && customIcon.src && customIcon.src !== window.location.href) {
+            customIcon.onload = function() {
+                customIcon.classList.add('loaded');
+                // Cacher l'icône dossier par défaut
+                const folderIcon = document.querySelector('.folder-icon');
+                if (folderIcon) folderIcon.style.display = 'none';
+            };
+            customIcon.onerror = function() {
+                // Si l'image ne charge pas, garder l'icône par défaut
+                customIcon.style.display = 'none';
+            };
+        }
 
         let shares = {
             share1: 0,
