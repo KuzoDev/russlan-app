@@ -14,7 +14,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(180deg, #000000 0%, #1a1a2e 100%);
+            background: #000000;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,11 +24,11 @@
 
         .container {
             width: 100%;
-            max-width: 480px;
-            background: #2a2a3e;
+            max-width: 380px;
+            background: #3d3d4d;
             border-radius: 24px;
-            padding: 40px 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            padding: 40px 25px 35px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .header {
@@ -37,8 +37,8 @@
         }
 
         .icon-container {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             background: #000;
             border-radius: 50%;
             margin: 0 auto 25px;
@@ -60,127 +60,110 @@
         }
 
         .folder-icon {
-            width: 70px;
-            height: 56px;
+            width: 60px;
+            height: 50px;
             position: relative;
         }
 
         .folder-back {
             position: absolute;
-            width: 70px;
-            height: 45px;
-            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-            border-radius: 6px;
+            width: 60px;
+            height: 42px;
+            background: transparent;
+            border: 3px solid #fff;
+            border-radius: 4px;
             bottom: 0;
-            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-        }
-
-        .folder-front {
-            position: absolute;
-            width: 65px;
-            height: 40px;
-            background: linear-gradient(135deg, #5ba3f5 0%, #4a90e2 100%);
-            border-radius: 6px;
-            bottom: 5px;
-            left: 5px;
-            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2);
         }
 
         .folder-tab {
             position: absolute;
-            width: 35px;
-            height: 12px;
-            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-            border-radius: 6px 6px 0 0;
+            width: 28px;
+            height: 8px;
+            background: #fff;
+            border-radius: 3px 3px 0 0;
             top: 0;
-            left: 8px;
-        }
-
-        .folder-lock {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: #ff4757;
-            border-radius: 50%;
-            bottom: 18px;
-            right: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 2px 6px rgba(255, 71, 87, 0.4);
+            left: 3px;
         }
 
         .title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             color: #fff;
             letter-spacing: 2px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+        }
+
+        .title .number {
+            background: #5d8ed8;
+            padding: 1px 8px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 0 1px;
         }
 
         .description {
-            color: #a0a0b0;
-            font-size: 15px;
-            line-height: 1.6;
+            color: #9a9aaa;
+            font-size: 14px;
+            line-height: 1.4;
             margin-bottom: 25px;
+            font-weight: 400;
         }
 
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #5d8ed8;
+            opacity: 0.25;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: #4a90e2;
+            background: #5d8ed8;
             width: 0%;
             transition: width 0.3s ease;
+            opacity: 1;
         }
 
         .buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .btn {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             border: none;
-            border-radius: 16px;
-            font-size: 17px;
+            border-radius: 14px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            transition: all 0.3s ease;
+            gap: 10px;
+            transition: all 0.2s ease;
             color: #fff;
             text-decoration: none;
+            position: relative;
         }
 
         .btn-share {
-            background: #4a90e2;
+            background: #4285f4;
         }
 
         .btn-share:hover {
-            background: #357abd;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            background: #3574e0;
+            transform: translateY(-1px);
         }
 
         .btn-share:disabled {
-            background: #666;
+            background: #6b6b7b;
             cursor: not-allowed;
-            opacity: 0.6;
+            opacity: 0.7;
         }
 
         .btn-share:active {
@@ -188,35 +171,47 @@
         }
 
         .share-counter {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
+            position: absolute;
+            right: 18px;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 4px 11px;
+            border-radius: 12px;
             font-size: 14px;
             font-weight: 700;
+            min-width: 42px;
+            text-align: center;
         }
 
         .icon {
-            font-size: 24px;
+            font-size: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon::before {
+            font-size: 22px;
         }
 
         .unlocked {
             margin-top: 20px;
-            padding: 20px;
-            background: #1a8754;
-            border-radius: 12px;
+            padding: 18px;
+            background: #2ecc71;
+            border-radius: 14px;
             text-align: center;
             display: none;
         }
 
         .unlocked h2 {
             color: #fff;
-            font-size: 20px;
-            margin-bottom: 10px;
+            font-size: 18px;
+            margin-bottom: 8px;
         }
 
         .unlocked p {
-            color: #d0ffd0;
-            font-size: 14px;
+            color: #e8f8f0;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -229,15 +224,13 @@
                 
                 <!-- Icône dossier par défaut (enlever si vous utilisez votre image) -->
                 <div class="folder-icon">
-                    <div class="folder-back"></div>
                     <div class="folder-tab"></div>
-                    <div class="folder-front"></div>
-                    <div class="folder-lock">🔞</div>
+                    <div class="folder-back"></div>
                 </div>
             </div>
             <h1 class="title">DOSSIER INTIME 🔞</h1>
             <p class="description">
-                Partage 2 fois pour débloquer tous les dossiers exclusifs ✓
+                Partage 6 fois pour débloquer tous les dossiers ✓
             </p>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
@@ -247,14 +240,14 @@
         <div class="buttons">
             <button class="btn btn-share" id="shareBtn1" onclick="handleShare(1)">
                 <span class="icon">📤</span>
-                <span>PARTAGE 1</span>
-                <span class="share-counter" id="counter1">0/1</span>
+                <span>PARTAGE</span>
+                <span class="share-counter" id="counter1">0/3</span>
             </button>
 
             <button class="btn btn-share" id="shareBtn2" onclick="handleShare(2)">
                 <span class="icon">🚀</span>
-                <span>PARTAGE 2</span>
-                <span class="share-counter" id="counter2">0/1</span>
+                <span>DOSSIER INTIME</span>
+                <span class="share-counter" id="counter2">0/3</span>
             </button>
         </div>
 
@@ -276,12 +269,10 @@
         if (customIcon && customIcon.src && customIcon.src !== window.location.href) {
             customIcon.onload = function() {
                 customIcon.classList.add('loaded');
-                // Cacher l'icône dossier par défaut
                 const folderIcon = document.querySelector('.folder-icon');
                 if (folderIcon) folderIcon.style.display = 'none';
             };
             customIcon.onerror = function() {
-                // Si l'image ne charge pas, garder l'icône par défaut
                 customIcon.style.display = 'none';
             };
         }
@@ -298,13 +289,13 @@
 
         function updateProgress() {
             const total = shares.share1 + shares.share2;
-            const percentage = (total / 2) * 100;
+            const percentage = (total / 6) * 100;
             document.getElementById('progressFill').style.width = percentage + '%';
             
-            document.getElementById('counter1').textContent = shares.share1 + '/1';
-            document.getElementById('counter2').textContent = shares.share2 + '/1';
+            document.getElementById('counter1').textContent = shares.share1 + '/3';
+            document.getElementById('counter2').textContent = shares.share2 + '/3';
 
-            if (total >= 2) {
+            if (total >= 6) {
                 unlockContent();
             }
         }
@@ -314,7 +305,7 @@
             const counter = document.getElementById('counter' + buttonNumber);
             
             if (buttonNumber === 1) {
-                if (shares.share1 >= 1 || processing.btn1) return;
+                if (shares.share1 >= 3 || processing.btn1) return;
                 
                 processing.btn1 = true;
                 btn.disabled = true;
@@ -331,7 +322,7 @@
                 }, 2000);
                 
             } else if (buttonNumber === 2) {
-                if (shares.share2 >= 1 || processing.btn2) return;
+                if (shares.share2 >= 3 || processing.btn2) return;
                 
                 processing.btn2 = true;
                 btn.disabled = true;
@@ -356,14 +347,13 @@
             tg.showAlert('🎉 Félicitations ! Tous les dossiers sont débloqués !');
             
             // Vous pouvez ajouter ici la logique pour afficher le contenu débloqué
-            // Par exemple: redirection vers un canal privé, affichage de liens, etc.
         }
 
         // Initialisation
         updateProgress();
 
         // Définir le thème
-        document.body.style.background = tg.themeParams.bg_color || 'linear-gradient(180deg, #000000 0%, #1a1a2e 100%)';
+        document.body.style.background = tg.themeParams.bg_color || '#000000';
     </script>
 </body>
 </html>
