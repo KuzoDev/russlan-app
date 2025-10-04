@@ -46,6 +46,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
 
         .custom-icon {
@@ -55,7 +56,7 @@
             display: none;
         }
 
-        .custom-icon.loaded {
+        .custom-icon.show {
             display: block;
         }
 
@@ -93,14 +94,6 @@
             margin-bottom: 18px;
         }
 
-        .title .number {
-            background: #5d8ed8;
-            padding: 1px 8px;
-            border-radius: 5px;
-            display: inline-block;
-            margin: 0 1px;
-        }
-
         .description {
             color: #9a9aaa;
             font-size: 14px;
@@ -112,8 +105,7 @@
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: #5d8ed8;
-            opacity: 0.25;
+            background: rgba(93, 142, 216, 0.25);
             border-radius: 10px;
             margin-bottom: 28px;
             overflow: hidden;
@@ -123,8 +115,7 @@
             height: 100%;
             background: #5d8ed8;
             width: 0%;
-            transition: width 0.3s ease;
-            opacity: 1;
+            transition: width 0.5s ease;
         }
 
         .buttons {
@@ -147,26 +138,22 @@
             gap: 10px;
             transition: all 0.2s ease;
             color: #fff;
-            text-decoration: none;
             position: relative;
-        }
-
-        .btn-share {
             background: #4285f4;
         }
 
-        .btn-share:hover {
+        .btn:hover:not(:disabled) {
             background: #3574e0;
             transform: translateY(-1px);
         }
 
-        .btn-share:disabled {
+        .btn:disabled {
             background: #6b6b7b;
             cursor: not-allowed;
             opacity: 0.7;
         }
 
-        .btn-share:active {
+        .btn:active:not(:disabled) {
             transform: translateY(0);
         }
 
@@ -185,13 +172,6 @@
         .icon {
             font-size: 20px;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .icon::before {
-            font-size: 22px;
         }
 
         .unlocked {
@@ -201,6 +181,10 @@
             border-radius: 14px;
             text-align: center;
             display: none;
+        }
+
+        .unlocked.show {
+            display: block;
         }
 
         .unlocked h2 {
@@ -219,18 +203,25 @@
     <div class="container">
         <div class="header">
             <div class="icon-container">
-                <!-- Pour utiliser votre propre image, décommentez la ligne ci-dessous et mettez l'URL de votre image -->
-                <!-- <img src="VOTRE_URL_IMAGE_ICI" alt="Icon" class="custom-icon" id="customIcon"> -->
+                <!-- 
+                =============================================
+                POUR CHANGER L'IMAGE DE PROFIL :
+                Mettez votre image dans le même dossier que ce fichier HTML
+                et remplacez "profile.jpg" par le nom de votre image
+                Exemple: "monimage.png" ou "photo.jpg"
+                =============================================
+                -->
+                <img src="icon.jpg" alt="Profile" class="custom-icon" id="customIcon" onerror="this.style.display='none'">
                 
-                <!-- Icône dossier par défaut (enlever si vous utilisez votre image) -->
-                <div class="folder-icon">
+                <div class="folder-icon" id="defaultIcon">
                     <div class="folder-tab"></div>
                     <div class="folder-back"></div>
                 </div>
             </div>
+            
             <h1 class="title">DOSSIER INTIME 🔞</h1>
             <p class="description">
-                Partage 6 fois pour débloquer tous les dossiers ✓
+                Partage 3x pour chaque bouton pour débloquer tous les dossiers ✓
             </p>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
@@ -238,15 +229,15 @@
         </div>
 
         <div class="buttons">
-            <button class="btn btn-share" id="shareBtn1" onclick="handleShare(1)">
+            <button class="btn" id="shareBtn1" onclick="handleShare(1)">
                 <span class="icon">📤</span>
                 <span>PARTAGE</span>
                 <span class="share-counter" id="counter1">0/3</span>
             </button>
 
-            <button class="btn btn-share" id="shareBtn2" onclick="handleShare(2)">
+            <button class="btn" id="shareBtn2" onclick="handleShare(2)">
                 <span class="icon">🚀</span>
-                <span>DOSSIER INTIME</span>
+                <span>PARTAGE</span>
                 <span class="share-counter" id="counter2">0/3</span>
             </button>
         </div>
@@ -258,102 +249,89 @@
     </div>
 
     <script>
-        // Initialiser l'app Telegram
+        // Initialiser Telegram WebApp
         let tg = window.Telegram.WebApp;
         tg.expand();
 
         const SHARE_URL = "https://t.me/share/url?url=https://t.me/+y5CzFsZ8b_Q1YmI8&text=TOUS%20LES%20LEAKS%20SONT%20DISPONIBLES%0AICI%20%F0%9F%94%9E%F0%9F%92%A6";
 
-        // Gérer l'image personnalisée
-        const customIcon = document.getElementById('customIcon');
-        if (customIcon && customIcon.src && customIcon.src !== window.location.href) {
+        // Gestion de l'image de profil
+        window.addEventListener('load', function() {
+            const customIcon = document.getElementById('customIcon');
+            const defaultIcon = document.getElementById('defaultIcon');
+            
             customIcon.onload = function() {
-                customIcon.classList.add('loaded');
-                const folderIcon = document.querySelector('.folder-icon');
-                if (folderIcon) folderIcon.style.display = 'none';
+                customIcon.classList.add('show');
+                defaultIcon.style.display = 'none';
             };
-            customIcon.onerror = function() {
-                customIcon.style.display = 'none';
-            };
-        }
+        });
 
+        // État des partages
         let shares = {
             share1: 0,
             share2: 0
         };
 
-        let processing = {
-            btn1: false,
-            btn2: false
-        };
+        let processing = false;
 
-        function updateProgress() {
+        // Mise à jour de l'interface
+        function updateUI() {
             const total = shares.share1 + shares.share2;
-            const percentage = (total / 6) * 100;
-            document.getElementById('progressFill').style.width = percentage + '%';
+            const maxShares = 6;
+            const percentage = (total / maxShares) * 100;
             
+            document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('counter1').textContent = shares.share1 + '/3';
             document.getElementById('counter2').textContent = shares.share2 + '/3';
-
-            if (total >= 6) {
+            
+            // Désactiver les boutons si maximum atteint
+            if (shares.share1 >= 3) {
+                document.getElementById('shareBtn1').disabled = true;
+            }
+            if (shares.share2 >= 3) {
+                document.getElementById('shareBtn2').disabled = true;
+            }
+            
+            // Débloquer si total atteint
+            if (total >= maxShares) {
                 unlockContent();
             }
         }
 
+        // Gérer le partage
         function handleShare(buttonNumber) {
+            if (processing) return;
+            
+            const shareKey = 'share' + buttonNumber;
+            
+            if (shares[shareKey] >= 3) return;
+            
+            processing = true;
             const btn = document.getElementById('shareBtn' + buttonNumber);
             const counter = document.getElementById('counter' + buttonNumber);
             
-            if (buttonNumber === 1) {
-                if (shares.share1 >= 3 || processing.btn1) return;
-                
-                processing.btn1 = true;
-                btn.disabled = true;
-                counter.textContent = '⏳';
-                
-                // Ouvrir le lien de partage Telegram
-                tg.openTelegramLink(SHARE_URL);
-                
-                setTimeout(() => {
-                    shares.share1 = 3;  // Passer directement à 3
-                    processing.btn1 = false;
-                    btn.disabled = false;
-                    updateProgress();
-                }, 1000);  // 1 seconde de délai
-                
-            } else if (buttonNumber === 2) {
-                if (shares.share2 >= 3 || processing.btn2) return;
-                
-                processing.btn2 = true;
-                btn.disabled = true;
-                counter.textContent = '⏳';
-                
-                // Ouvrir le lien de partage Telegram
-                tg.openTelegramLink(SHARE_URL);
-                
-                setTimeout(() => {
-                    shares.share2 = 3;  // Passer directement à 3
-                    processing.btn2 = false;
-                    btn.disabled = false;
-                    updateProgress();
-                }, 1000);  // 1 seconde de délai
-            }
+            btn.disabled = true;
+            counter.textContent = '⏳';
+            
+            // Ouvrir le lien de partage
+            tg.openTelegramLink(SHARE_URL);
+            
+            // Simuler la validation du partage
+            setTimeout(() => {
+                shares[shareKey]++;
+                processing = false;
+                updateUI();
+            }, 1500);
         }
 
+        // Débloquer le contenu
         function unlockContent() {
-            document.getElementById('unlockedSection').style.display = 'block';
-            
-            // Notifier le bot Telegram que le contenu est débloqué
+            document.getElementById('unlockedSection').classList.add('show');
             tg.showAlert('🎉 Félicitations ! Tous les dossiers sont débloqués !');
-            
-            // Vous pouvez ajouter ici la logique pour afficher le contenu débloqué
         }
 
         // Initialisation
-        updateProgress();
-
-        // Définir le thème
-        document.body.style.background = tg.themeParams.bg_color || '#000000';
+        updateUI();
     </script>
 </body>
 </html>
